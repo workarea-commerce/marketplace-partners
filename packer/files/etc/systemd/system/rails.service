@@ -1,0 +1,28 @@
+[Unit]
+Description=Rails Server
+After=network.target
+
+# Uncomment for socket activation (see below)
+#Requires=puma.socket
+
+[Service]
+# Foreground process (do not use --daemon in ExecStart or config.rb)
+Type=simple
+
+# Preferably configure a non-privileged user
+# User=
+
+# The path to the your application code root directory.
+# Also replace the "<YOUR_APP_PATH>" place holders below with this path.
+# Example /home/username/myapp
+WorkingDirectory=/srv/shop
+
+# Run the Rails server
+ExecStart=/srv/shop/bin/rails server
+Restart=always
+
+# Helpful for debugging socket activation, etc.
+Environment=RAILS_ENV=production
+
+[Install]
+WantedBy=multi-user.target

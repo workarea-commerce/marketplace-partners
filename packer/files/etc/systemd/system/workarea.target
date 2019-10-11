@@ -1,0 +1,6 @@
+[Unit]
+Wants=network-online.target workarea-rails.target workarea-sidekiq.target
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target

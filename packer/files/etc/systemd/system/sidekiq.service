@@ -1,0 +1,19 @@
+[Unit]
+Description=Sidekiq
+After=network.target
+
+[Service]
+# Foreground process (do not use --daemon in ExecStart or config.rb)
+Type=simple
+
+# Preferably configure a non-privileged user
+# User=
+
+# Run Sidekiq in the app directory
+WorkingDirectory=/srv/shop
+ExecStart=/srv/shop/bin/bundle exec sidekiq
+Restart=always
+Environment=RAILS_ENV=production
+
+[Install]
+WantedBy=multi-user.target

@@ -6,9 +6,15 @@ myip=$(hostname -I | awk '{print$1}')
 cat <<EOF
 ********************************************************************************
 
-This is the text that will be shown in the MOTD users see when they log in via
-SSH.  This copy should include links to documentation or product informaiton
-along with any information that would helpful to users.
+Welcome to Workarea!
+
+To learn more about our commerce platform, visit: https://developer.workarea.com
+
+If this is your first time logging into the droplet, make sure you take
+the following steps to finalize your Workarea installation:
+
+1.) Edit configuration in /etc/profile.d/workarea.sh
+2.) Seed the database by running \`bin/rails db:seed\` in /srv/shop
 
 ********************************************************************************
 To delete this message of the day: rm -rf $(readlink -f ${0})
