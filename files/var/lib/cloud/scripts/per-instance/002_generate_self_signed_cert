@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+#
+# Generate a self-signed certificate using the Fauthentic gem, which
+# uses Ruby's OpenSSL integration to generate the certs without asking
+# the user a million questions.
+
+require 'bundler/inline'
+require 'pathname'
+
+gemfile do
+  source 'https://rubygems.org'
+
+  gem 'fauthentic'
+end
+
+FileUtils.mkdir_p('/etc/ssl/private')
+path = Pathname.new('/etc/ssl/private')
+ssl = Fauthentic.generate
+cert = path.join('workarea.crt')
+key = path.join('workarea.pem')
+
+cert.write(ssl.cert.to_pem)
+key.write(ssl.key.to_s)

@@ -1,0 +1,14 @@
+[Unit]
+Description=Rails Server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/shop
+EnvironmentFile=/etc/workarea.env
+ExecStart=/srv/shop/bin/rails server
+RestartSec=1
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

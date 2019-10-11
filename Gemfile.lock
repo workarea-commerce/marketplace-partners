@@ -1,0 +1,66 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
+    droplet_kit (3.2.0)
+      faraday (~> 0.15)
+      kartograph (~> 0.2.3)
+      resource_kit (~> 0.1.5)
+      virtus (~> 1.0.3)
+    equalizer (0.0.11)
+    faraday (0.17.0)
+      multipart-post (>= 1.2, < 3)
+    ffi (1.11.1)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
+    http (4.2.0)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.0)
+      http-parser (~> 1.2.0)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
+    http-form_data (2.1.1)
+    http-parser (1.2.1)
+      ffi-compiler (>= 1.0, < 2.0)
+    ice_nine (0.11.2)
+    kartograph (0.2.7)
+    multipart-post (2.1.1)
+    net-ssh (5.2.0)
+    public_suffix (4.0.1)
+    rake (13.0.0)
+    resource_kit (0.1.7)
+      addressable (>= 2.3.6, < 3.0.0)
+    thread_safe (0.3.6)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.6)
+    virtus (1.0.5)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  droplet_kit
+  http
+  net-ssh
+  rake
+
+BUNDLED WITH
+   2.0.2

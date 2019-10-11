@@ -1,0 +1,16 @@
+name: Build
+on:
+  push:
+    branches: [master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v1
+      - name: Build Image for testing on DigitalOcean
+        uses: dawitnida/packer-github-actions/build@master
+        env:
+          TEMPLATE_FILE_NAME: marketplace-image.json
+          DIGITALOCEAN_TOKEN: ${{ secrets.digitalocean_token }}
+          ACTION_COMMENT: 'false'

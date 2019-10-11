@@ -1,0 +1,15 @@
+[Unit]
+Description=Sidekiq
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/shop
+EnvironmentFile=/etc/workarea.env
+ExecStart=/srv/shop/bin/bundle exec sidekiq -e production
+ExecReload=/usr/bin/kill -TSTP $MAINPID
+RestartSec=1
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
