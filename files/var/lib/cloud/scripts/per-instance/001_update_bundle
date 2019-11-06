@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Update the Workarea installation because this image might not be up to
+# date with the latest patch.
+pushd /srv/shop
+  bundle update workarea && bundle exec rails g workarea:install --force
+popd

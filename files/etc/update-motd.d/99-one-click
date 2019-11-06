@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# The MOTD for Workarea applications. This also configures the
+# application when you first log in.
+
+cat <<EOF
+********************************************************************************
+
+Welcome to your Workarea application!
+
+To learn more about our commerce platform, visit: https://developer.workarea.com
+This Workarea application is served at https://$WORKAREA_HOST
+
+********************************************************************************
+To delete this message of the day: rm -rf $(readlink -f ${0})
+EOF

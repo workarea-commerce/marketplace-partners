@@ -1,0 +1,77 @@
+{
+  "variables": {
+    "token": "{{env `DIGITALOCEAN_TOKEN`}}",
+    "image_name": "workarea-{{timestamp}}",
+    "apt_packages": "git ssh tzdata build-essential nodejs libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev autoconf bison xvfb imagemagick jpegoptim ruby2.6 ruby2.6-dev nginx-full nginx ruby-switch elasticsearch mongodb-org openjdk-8-jdk-headless redis certbot python-certbot-nginx",
+    "rails_flags": "--skip-spring --skip-active-record --skip-action-cable --skip-puma --skip-coffee --skip-turbolinks --skip-bootsnap --skip-yarn --skip-bundle --force"
+  },
+  "builders": [
+    {
+      "type": "digitalocean",
+      "api_token": "{{user `token`}}",
+      "image": "ubuntu-18-04-x64",
+      "region": "nyc3",
+      "size": "s-1vcpu-1gb",
+      "ssh_username": "root",
+      "snapshot_name": "{{user `image_name`}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "files/etc/",
+      "destination": "/etc/"
+    },
+    {
+      "type": "file",
+      "source": "files/var/",
+      "destination": "/var/"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "cloud-init status --wait",
+        "wget -qO - https://www.mongodb.org/static/pgp/server-4.0.asc | apt-key add -",
+        "wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -",
+        "apt -yy install apt-transport-https software-properties-common",
+        "apt-add-repository -y ppa:brightbox/ruby-ng",
+        "apt-add-repository -y ppa:certbot/certbot",
+        "apt -qqy update",
+        "apt -qqy -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' full-upgrade",
+        "apt -qqy -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold' install {{user `apt_packages`}}",
+        "systemctl daemon-reload",
+        "systemctl enable elasticsearch",
+        "systemctl enable mongod",
+        "systemctl enable rails",
+        "systemctl enable sidekiq",
+        "systemctl start mongod",
+        "systemctl start elasticsearch",
+        "systemctl start redis",
+        "ruby-switch --set ruby2.6",
+        "gem install bundler --no-doc",
+        "mkdir -p /srv/shop",
+        "cd /srv/shop",
+        "bundle init",
+        "bundle add workarea",
+        "bundle exec rails new . {{user `rails_flags`}}",
+        "bundle remove sass-rails",
+        "bundle add workarea",
+        "bundle exec rails generate workarea:install",
+        "bundle exec rails assets:precompile",
+        "echo \"SECRET_KEY_BASE=$(bundle exec rails secret)\" >> /etc/workarea.env"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "files/srv/",
+      "destination": "/srv/"
+    },
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/90-cleanup.sh",
+        "scripts/99-img_check.sh"
+      ]
+    }
+  ]
+}
