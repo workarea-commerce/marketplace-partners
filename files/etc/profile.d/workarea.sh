@@ -67,10 +67,18 @@ do not put in your protocol like https://, this is handled for you):"
   if [[ "$host" != "$ip" ]]; then
     echo "Setting up SSL for $host with certbot..."
     certbot --nginx
+  else
+    echo "Generating self-signed SSL cert..."
+    pushd /etc/ssl/private
+    openssl genrsa -out workarea.key 2048
+    openssl rsa -in workarea.key -out workarea.key
+    openssl req -sha256 -new -key workarea.key -out workarea.csr -subj "/CN=$ip"
+    openssl x509 -req -sha256 -days 365 -in workarea.csr -signkey workarea.key -out workarea.crt
+    popd
   fi
 
   echo "Restarting processes..."
-  systemctl restart rails sidekiq
+  systemctl restart rails sidekiq nginx
   printf "Waiting for Elasticsearch..."
   until curl -s http://localhost:9200 > /dev/null; do
     printf "."
