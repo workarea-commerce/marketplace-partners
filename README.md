@@ -1,5 +1,7 @@
 # Workarea One-Click Droplet Image
 
+**NOTE:** This repo is not meant to be used directly. If you're looking for our one-click droplet image, it will be available on DigitalOcean when they approve it! :)
+
 This is the source for Workarea's One-Click DigitalOcean Droplet, an
 image that you can run in your [DigitalOcean][] account that sets up a basic
 Workarea application. It uses [Packer][], a tool for creating images
