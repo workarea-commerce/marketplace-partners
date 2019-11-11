@@ -4,9 +4,9 @@ namespace :workarea do
     task password: :environment do
       password = SecureRandom.base64
 
-      User.admins.each { |admin| admin.update!(password: password) }
+      Workarea::User.admins.each { |admin| admin.update!(password: password) }
 
-      puts password
+      puts "Log into /admin with email 'user@workarea.com' and password '#{password}'"
     end
   end
 end
