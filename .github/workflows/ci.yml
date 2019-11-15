@@ -16,38 +16,3 @@ jobs:
         env:
           TEMPLATE_FILE_NAME: marketplace-image.json
           DIGITALOCEAN_TOKEN: ${{ secrets.digitalocean_token }}
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v1
-      - name: Build Image for testing on DigitalOcean
-        uses: dawitnida/packer-github-actions/build@master
-        env:
-          TEMPLATE_FILE_NAME: marketplace-image.json
-          DIGITALOCEAN_TOKEN: ${{ secrets.digitalocean_token }}
-          ACTION_COMMENT: 'false'
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v1
-      - name: Install Ruby 2.6
-        uses: actions/setup-ruby@v1
-        with:
-          ruby_version: 2.6.x
-      - name: Bundle Gems
-        run: |
-          gem update bundler
-          bundle install
-      - name: Install Image onto DigitalOcean Droplet
-        env:
-          DIGITALOCEAN_TOKEN: ${{ secrets.digitalocean_token }}
-        run: bundle exec rake install
-      - name: Remove Droplet and Existing Images
-        env:
-          DIGITALOCEAN_TOKEN: ${{ secrets.digitalocean_token }}
-          SSH_PUBLIC_KEY: ${{ secrets.ssh_public_key }}
-          SSH_PRIVATE_KEY: ${{ secrets.ssh_private_key }}
-        run: bundle exec rake clean
