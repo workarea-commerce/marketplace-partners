@@ -8,6 +8,21 @@ Workarea application. It uses [Packer][], a tool for creating images
 from a single source configuration, to automatically build and snapshot
 the image for use in DigitalOcean's marketplace.
 
+## What's Workarea?
+
+[Workarea](https://www.workarea.com) is an enterprise-grade commerce
+platform written in [Ruby on Rails](https://rubyonrails.org). It uses
+[MongoDB](https://www.mongodb.com),
+[Elasticsearch](https://www.elastic.co/products/elasticsearch), and
+[Redis](https://redis.io). Workarea also uses a whole lot of gems you
+can see in [our
+gemspec](https://github.com/workarea-commerce/workarea/blob/master/core/workarea-core.gemspec).
+
+This droplet contains everything you need to run a basic Workarea
+application, including all of the aforementioned services. It's useful
+for evaluating a Commerce Cloud installation of Workarea, or simply
+using it on its own for a smaller-size store.
+
 ## Building
 
 Packer uses the [DigitalOcean builder][] to build the image as a
