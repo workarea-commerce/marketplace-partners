@@ -57,6 +57,23 @@ the renewal process with [Certbot][] so you can get to work immediately.
 The last line of the script run instructs you how to log into `/admin`
 for the first time. Be sure to change your password after this.
 
+### Getting Started
+
+After creating the Workarea Droplet, SSH into your newly-created droplet
+and follow the on-screen instructions to set your domain name, AWS S3
+settings, and CDN domain. Most of these are optional, but are provided
+here to get you started on the right foot. After database seeding
+completes, you can browse your new store at the configured host or your
+droplet's IP. Log in with email **user@workarea.com** and the generated
+password that you see after seeds complete.
+
+If you provide a hostname in the setup process, `certbot --nginx` will
+run automatically and set up your site with a real SSL certificate
+provided by LetsEncrypt. Otherwise (such as for demo or evaluation
+purposes), a self-signed certificate will be generated. Since the
+application runs in production mode, some kind of SSL cert is necessary
+in order for the application to function properly.
+
 ## Development
 
 The `marketplace-image.json` file is validated and built upon every
