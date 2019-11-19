@@ -2,7 +2,7 @@
   "variables": {
     "token": "{{env `DIGITALOCEAN_TOKEN`}}",
     "image_name": "workarea-{{timestamp}}",
-    "apt_packages": "git ssh tzdata build-essential nodejs libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev autoconf bison xvfb imagemagick jpegoptim ruby2.6 ruby2.6-dev ruby-switch elasticsearch mongodb-org openjdk-8-jdk-headless redis nginx certbot python-certbot-nginx",
+    "apt_packages": "git ssh tzdata build-essential nodejs libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev autoconf bison xvfb imagemagick jpegoptim ruby2.6 ruby2.6-dev ruby-switch elasticsearch mongodb-org=4.0.3 mongodb-org-server=4.0.3 mongodb-org-shell=4.0.3 mongodb-org-mongos=4.0.3 mongodb-org-tools=4.0.3 openjdk-8-jdk-headless redis nginx certbot python-certbot-nginx",
     "rails_flags": "--skip-spring --skip-active-record --skip-action-cable --skip-puma --skip-coffee --skip-turbolinks --skip-bootsnap --skip-yarn --skip-bundle --force"
   },
   "builders": [
