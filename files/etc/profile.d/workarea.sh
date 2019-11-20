@@ -73,10 +73,10 @@ do not put in your protocol like https://, this is handled for you):"
   else
     echo "Generating self-signed SSL cert..."
     pushd /etc/ssl/private
-    openssl genrsa -out workarea.key 2048 > /dev/null
-    openssl rsa -in workarea.key -out workarea.key > /dev/null
-    openssl req -sha256 -new -key workarea.key -out workarea.csr -subj "/CN=$ip" > /dev/null
-    openssl x509 -req -sha256 -days 365 -in workarea.csr -signkey workarea.key -out workarea.crt > /dev/null
+    openssl genrsa -out workarea.key 2048 > /dev/null 2>&1
+    openssl rsa -in workarea.key -out workarea.key > /dev/null 2>&1
+    openssl req -sha256 -new -key workarea.key -out workarea.csr -subj "/CN=$ip" > /dev/null 2>&1
+    openssl x509 -req -sha256 -days 365 -in workarea.csr -signkey workarea.key -out workarea.crt > /dev/null 2>&1
     popd
   fi
 
