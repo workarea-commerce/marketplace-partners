@@ -51,6 +51,7 @@ setup() {
     host=$ip
   fi
   echo "WORKAREA_HOST=$host" >> /etc/workarea.env
+  echo "Workarea.config.host = ENV['WORKAREA_HOST']" > /srv/shop/config/initializers/workarea_host_from_env.rb
 
   echo -n "Enter your CDN hostname  (leave blank to use your hostname,
 do not put in your protocol like https://, this is handled for you):"
@@ -65,7 +66,6 @@ do not put in your protocol like https://, this is handled for you):"
   set -a
   . /etc/workarea.env
   set +a
-  sed -i "s/www.shop.com/$host/" /srv/shop/config/initializers/workarea.rb
 
   if [[ "$host" != "$ip" ]]; then
     echo "Setting up SSL for $host with certbot..."
