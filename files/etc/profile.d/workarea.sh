@@ -39,6 +39,9 @@ setup() {
   if [[ -e $bucket_name ]]; then
     echo "WORKAREA_S3_BUCKET_NAME=$bucket_name" >> /etc/workarea.env
   fi
+  if [[ -z $access_key && -z $secret_key ]]; then
+    echo 'Workarea.config.asset_store = :file' > /srv/shop/config/initializers/local_asset_store.rb
+  fi
 
   ip="$(curl -s https://ipinfo.io/ip)"
   echo -n "Enter your Hostname (default $ip): "
@@ -70,10 +73,10 @@ do not put in your protocol like https://, this is handled for you):"
   else
     echo "Generating self-signed SSL cert..."
     pushd /etc/ssl/private
-    openssl genrsa -out workarea.key 2048
-    openssl rsa -in workarea.key -out workarea.key
-    openssl req -sha256 -new -key workarea.key -out workarea.csr -subj "/CN=$ip"
-    openssl x509 -req -sha256 -days 365 -in workarea.csr -signkey workarea.key -out workarea.crt
+    openssl genrsa -out workarea.key 2048 > /dev/null
+    openssl rsa -in workarea.key -out workarea.key > /dev/null
+    openssl req -sha256 -new -key workarea.key -out workarea.csr -subj "/CN=$ip" > /dev/null
+    openssl x509 -req -sha256 -days 365 -in workarea.csr -signkey workarea.key -out workarea.crt > /dev/null
     popd
   fi
 

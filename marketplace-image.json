@@ -59,7 +59,9 @@
         "bundle add workarea",
         "bundle exec rails generate workarea:install",
         "bundle exec rails assets:precompile",
-        "echo \"SECRET_KEY_BASE=$(bundle exec rails secret)\" >> /etc/workarea.env"
+        "echo \"SECRET_KEY_BASE=$(bundle exec rails secret)\" >> /etc/workarea.env",
+        "rm /etc/nginx/sites-available/default",
+        "cp /etc/nginx/sites-available/workarea /etc/nginx/sites-available/default"
       ]
     },
     {
