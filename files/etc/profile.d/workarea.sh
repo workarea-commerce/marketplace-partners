@@ -39,6 +39,9 @@ setup() {
   if [[ -e $bucket_name ]]; then
     echo "WORKAREA_S3_BUCKET_NAME=$bucket_name" >> /etc/workarea.env
   fi
+  if [[ -z $access_key && -z $secret_key ]]; then
+    echo 'Workarea.config.asset_store = :file' > /srv/shop/config/initializers/local_asset_store.rb
+  fi
 
   ip="$(curl -s https://ipinfo.io/ip)"
   echo -n "Enter your Hostname (default $ip): "
@@ -48,6 +51,7 @@ setup() {
     host=$ip
   fi
   echo "WORKAREA_HOST=$host" >> /etc/workarea.env
+  echo "Workarea.config.host = ENV['WORKAREA_HOST']" > /srv/shop/config/initializers/workarea_host_from_env.rb
 
   echo -n "Enter your CDN hostname  (leave blank to use your hostname,
 do not put in your protocol like https://, this is handled for you):"
@@ -62,7 +66,6 @@ do not put in your protocol like https://, this is handled for you):"
   set -a
   . /etc/workarea.env
   set +a
-  sed -i "s/www.shop.com/$host/" /srv/shop/config/initializers/workarea.rb
 
   if [[ "$host" != "$ip" ]]; then
     echo "Setting up SSL for $host with certbot..."

@@ -69,7 +69,7 @@ task :test do
   ssh.exec! 'systemctl restart rails sidekiq'
 
   puts 'Checking whether Droplet is active...'
-  sleep 3
+  sleep 15
   ctx = OpenSSL::SSL::SSLContext.new
   ctx.verify_mode = OpenSSL::SSL::VERIFY_NONE
   response = HTTP.get "https://#{ip}", ssl_context: ctx
@@ -78,13 +78,24 @@ task :test do
 end
 
 desc 'Remove all image snapshots and droplets'
-task :clean do
-  images = DO.images.all.select do |image|
-    !image.public && image.name.start_with?('workarea-')
+task clean: %w[clean:images clean:droplets]
+
+namespace :clean do
+  desc 'Remove all workarea images'
+  task :images do
+    DO.images.all.each do |image|
+      image.delete if !image.public && image.name.start_with?('workarea-')
+    rescue
+    end
   end
-  images.each { |image| DO.images.delete(id: image.id) }
-  DO.droplets.delete(name: NAME)
-rescue
+
+  desc 'Remove all workarea droplets'
+  task :droplets do
+    DO.droplets.all.each do |droplet|
+      droplet.delete if droplet.name == NAME
+    rescue
+    end
+  end
 end
 
 task default: %i[build]
