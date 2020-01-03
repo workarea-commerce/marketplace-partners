@@ -89,6 +89,22 @@ purposes), a self-signed certificate will be generated. Since the
 application runs in production mode, some kind of SSL cert is necessary
 in order for the application to function properly.
 
+### Using Custom Domain
+
+If you are using a custom domain, make sure your A record and nameservers
+are pointing to your newly created droplet. After verifying, you can now
+log into the image. When presented with the command-line interface for setup,
+exit the setup. There are a couple of nginx configs that need to be changed
+for setup to complete successfully. Edit `/etc/nginx/sites-available/default`
+by removing the SSL listen values, the ssl_certifcate and ssl_certificate_key
+values. Replace `_` with your domains in the server_name config.
+
+Double check that `WORKAREA_HOST` and `WORKAREA_CDN_HOST` are not present in
+`/etc/workarea.env`.
+
+Exit and re-ssh into the image. Complete setup as instructed in the command-line
+interface.
+
 ## Development
 
 The `marketplace-image.json` file is validated and built upon every
